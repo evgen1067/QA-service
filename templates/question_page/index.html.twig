@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    QAservice
+{% endblock %}
+
+{% block header %}
+    {% include 'base/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <!-- main body -->
+    <main>
+        <div class="container masthead-followup px-4 px-md-3 mt-3">
+            <section class="row mb-5 pb-md-4 align-items-center">
+                <div class="col-md-12">
+                    <!-- SVG (значок вопроса) -->
+                    <div class="masthead-followup-icon d-inline-block mb-2 text-white">
+                        {% include 'svg/question_icon.html.twig' %}
+                    </div>
+                    {% for q in question %}
+                        <!-- Категория вопроса -->
+                        <h2 class="display-5 fw-normal">
+                            {{ q.category }}
+                        </h2>
+                        <!-- Дата и автор вопроса -->
+                        <p class="lead fw-normal">
+                            {{ q.author ~ ' (' ~ q.date|date("d.m.Y, в H:m") ~ ')' }}
+                        </p>
+                        <!-- Заголовок вопроса -->
+                        <p class="lead fw-normal">
+                            {{ q.title ~ ' (Ответов: ' ~ q.answerCount ~ ')' }}
+                        </p>
+                        <!-- Текст вопроса -->
+                        <p>
+                            {{ q.text }}
+                        </p>
+                    {% endfor %}
+                </div>
+                {% if app.user %}
+                    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+                    <div class="container masthead-followup px-4 px-md-3">
+                        <section class="row mb-5 pb-md-4 align-items-center">
+                            {{ form_start(form) }}
+                            <div class="form-floating">
+                                {{ form_row(form.answer_text, {
+                                    class: 'form-control comment-textarea',
+                                    label: 'Ответ',
+                                }) }}
+                                <button type="submit" class="btn btn-lg btn-outline-primary mb-3 mt-3">
+                                    Отправить
+                                </button>
+                            </div>
+                            {{ form_end(form) }}
+                        </section>
+                    </div>
+                {% endif %}
+                <div class="col-md-12">
+                    {% for answer in answers %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-start align-items-center">
+                                    <div>
+                                        <!-- TODO author -->
+                                        <h6 class="fw-bold text-primary mb-1">
+                                            {{ answer.author }}
+                                        </h6>
+                                        <!-- TODO date -->
+                                        <p class="text-muted small mb-0">
+                                            Ответил - {{ answer.date|date("d.m.Y, в H:m") }}. Помогло
+                                            - {{ answer.correctness }}.
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- TODO asnwer-text -->
+                                <p class="mt-3 mb-4 pb-2">
+                                    {{ answer.text }}
+                                </p>
+
+                                <div class="d-flex justify-content-start check-container">
+                                    <a class="d-flex align-items-center text-decoration-none check-container-a">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        <p class="mb-0">
+                                            {% for q in question %}
+                                                <a href="/question_help/{{ answer.id }}/{{ q.id }}">Помогло</a>
+                                            {% endfor %}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    {% include 'base/footer.html.twig' %}
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    QAservice
+{% endblock %}
+
+{% block header %}
+    {% include 'base/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <!-- main body -->
+    <main>
+        <!-- hello -->
+        <div class="bd-masthead mb-3" id="content">
+            <div class="container px-4 px-md-3">
+                <div class="row align-items-lg-center">
+                    <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5">
+                        <!-- SVG (логотип) -->
+                        {% include 'svg/logo.html.twig' %}
+                    </div>
+                    <div class="col-md-8 order-md-1 col-lg-7 text-center text-md-start">
+                        <h1 class="mb-3">
+                            Q<span class="ampersand">&</span>Aservice — вопросы и ответы для IT-специалистов
+                        </h1>
+                        <p class="lead mb-4">
+                            Получайте ответы на вопросы по любой теме из области IT от специалистов в этой теме.
+                        </p>
+
+                        <div class="d-flex flex-column flex-md-row">
+                            {% if app.user %}
+                                <!-- TODO href -->
+                                <a href="/add/question" class="btn btn-lg btn-bd-primary mb-3 me-md-3">Оставить вопрос</a>
+                                <!-- TODO href -->
+                                <a href="/logout" class="btn btn-lg btn-outline-secondary mb-3">Выход</a>
+                            {% else %}
+                                <!-- TODO href -->
+                                <a href="/login" class="btn btn-lg btn-bd-primary mb-3 me-md-3">Авторизация</a>
+                                <!-- TODO href -->
+                                <a href="/register" class="btn btn-lg btn-outline-secondary mb-3">Регистрация</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- questions -->
+        <div class="container masthead-followup px-4 px-md-3">
+            <section class="row mb-5 pb-md-4 align-items-center">
+                <!-- one question -->
+                {% for question in questions %}
+                    <div class="col-md-6">
+                        <!-- SVG (значок вопроса) -->
+                        <div class="masthead-followup-icon d-inline-block mb-2 text-white">
+                            {% include 'svg/question_icon.html.twig' %}
+                        </div>
+                        <!-- Заголовок вопроса -->
+                        <h2 class="display-5 fw-normal">
+                            {{ question.category }}
+                        </h2>
+                        <!-- Категория вопроса -->
+                        <p class="lead fw-normal">
+                            {{ question.title ~ ' (' ~ question.date|date("d.m.Y, в H:m") ~ ')' }}
+                        </p>
+                        <!-- Текст вопроса -->
+                        <p>
+                            {{ question.text }}
+                        </p>
+                        <a class="btn btn-lg btn-outline-primary mb-3" href="/question/{{ question.id }}">
+                            {{ 'Подробнее (Ответов: ' ~ question.answerCount ~ ')' }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </section>
+            <div class="col-12 d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if hasPreviousPage == true %}
+                            <li class="page-item">
+                                <a href="/?page={{ currentPage - 1 }}" class="btn btn-primary me-3">Назад</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="/?page=1" class="btn btn-primary me-3">1</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="btn btn-primary me-3 disabled">Назад</a>
+                            </li>
+                        {% endif %}
+                        {% if hasNextPage == true %}
+                            <li class="page-item">
+                                <a href="/?page={{ currentPage + 1 }}" class="btn btn-primary">Далее</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="btn btn-primary disabled">Далее</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}
+
+{% block footer %}
+    {% include 'base/footer.html.twig' %}
+{% endblock %}

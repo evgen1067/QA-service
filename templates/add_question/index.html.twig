@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}
+    QAservice
+{% endblock %}
+
+{% block header %}
+    {% include 'base/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-center flex-column mt-5 mb-3">
+        <h3 class="mb-3"><strong>Новый вопрос</strong></h3>
+        {{ form(form) }}
+        <datalist id="category">
+            {% for category in categories %}
+            <option value="{{ category.getCategoryName }}">
+            {% endfor %}
+        </datalist>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'base/footer.html.twig' %}
+{% endblock %}
