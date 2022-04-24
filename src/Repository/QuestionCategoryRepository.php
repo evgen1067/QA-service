@@ -22,8 +22,9 @@ class QuestionCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @param QuestionCategory $entity
+     * @param bool $flush
+     * @return void
      */
     public function add(QuestionCategory $entity, bool $flush = true): void
     {
@@ -34,8 +35,9 @@ class QuestionCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @param QuestionCategory $entity
+     * @param bool $flush
+     * @return void
      */
     public function remove(QuestionCategory $entity, bool $flush = true): void
     {
@@ -44,33 +46,4 @@ class QuestionCategoryRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
-    // /**
-    //  * @return QuestionCategory[] Returns an array of QuestionCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QuestionCategory
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

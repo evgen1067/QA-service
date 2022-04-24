@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
+)]
 #[ORM\Entity(repositoryClass: AnswerRepository::class)]
 class Answer
 {

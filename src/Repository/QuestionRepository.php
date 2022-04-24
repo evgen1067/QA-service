@@ -88,9 +88,9 @@ class QuestionRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery('
             SELECT q.id AS id,
-                   q.title AS title, 
-                   q.question_text AS text, 
-                   q.question_date AS date,  
+                   q.title AS title,
+                   q.question_text AS text,
+                   q.question_date AS date,
                    qc.category_name AS category,
                    (
                        SELECT count(a.id)
@@ -109,33 +109,4 @@ class QuestionRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-
-    // /**
-    //  * @return Question[] Returns an array of Question objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Question
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
