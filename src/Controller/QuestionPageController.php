@@ -15,63 +15,68 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionPageController extends AbstractController
 {
     #[Route('/question/{id}', name: 'question')]
-    public function index(int $id, ManagerRegistry $doctrine, Request $request): Response
+    public function index (int $id, ManagerRegistry $doctrine, Request $request): Response
     {
-        # получаю текущего пользователя
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-
-        $questionDetailPage = $doctrine->getRepository(Question::class)->getQuestionDetailPage($id);
 
         $question = $doctrine->getRepository(Question::class)->findOneBy(['id' => $id]);
 
-        $answers = $doctrine->getRepository(Answer::class)->getAnswersOnQuestion($id, true);
+        if ($question->getModerationStatus()) {
+            # получаю текущего пользователя
+            /**
+             * @var User $user
+             */
+            $user = $this->getUser();
 
-        if($user) {
-            # создание формы
-            $answer = new Answer();
+            $questionDetailPage = $doctrine->getRepository(Question::class)->getQuestionDetailPage($id);
 
-            $answer
-                ->setQuestion($question)
-                ->setAnswerDate(new \DateTime('now'))
-                ->setAnswerCorrectness(0)
-                ->setModerationStatus(false)
-                ->setUser($user);
+            $answers = $doctrine->getRepository(Answer::class)->getAnswersOnQuestion($id, true);
 
-            $form = $this->createForm(AnswerType::class, $answer);
+            if ($user) {
+                # создание формы
+                $answer = new Answer();
 
-            $form->handleRequest($request);
+                $answer
+                    ->setQuestion($question)
+                    ->setAnswerDate(new \DateTime('now'))
+                    ->setAnswerCorrectness(0)
+                    ->setModerationStatus(false)
+                    ->setUser($user);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                # получаю данные формы
-                $answer = $form->getData();
+                $form = $this->createForm(AnswerType::class, $answer);
 
-                $em = $doctrine->getManager();
+                $form->handleRequest($request);
 
-                $em->persist($answer);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    # получаю данные формы
+                    $answer = $form->getData();
 
-                $em->flush();
+                    $em = $doctrine->getManager();
 
-                return $this->redirectToRoute('question', ['id' => $question->getId()]);
+                    $em->persist($answer);
+
+                    $em->flush();
+
+                    return $this->redirectToRoute('question', ['id' => $question->getId()]);
+                }
+
+                return $this->renderForm('question_page/index.html.twig', [
+                    'question' => $questionDetailPage,
+                    'answers' => $answers,
+                    'form' => $form,
+                ]);
             }
 
-            return $this->renderForm('question_page/index.html.twig', [
+            return $this->render('question_page/index.html.twig', [
                 'question' => $questionDetailPage,
                 'answers' => $answers,
-                'form' => $form,
             ]);
         }
 
-        return $this->render('question_page/index.html.twig', [
-            'question' => $questionDetailPage,
-            'answers' => $answers,
-        ]);
+        return $this->redirectToRoute('questions');
     }
 
     #[Route('/question_help/{id}/{qId}', name: 'answer')]
-    public function helpedQuestion(int $id, int $qId, ManagerRegistry $doctrine): Response
+    public function helpedQuestion (int $id, int $qId, ManagerRegistry $doctrine): Response
     {
         $answer = $doctrine
             ->getRepository(Answer::class)

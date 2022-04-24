@@ -61,7 +61,7 @@ class AddQuestionController extends AbstractController
             # отправляю полученные данные в БД
             $em->flush();
 
-            return $this->redirectToRoute('question', ['id' => $question->getId()]);
+            return $this->redirectToRoute('questions');
         }
 
         return $this->renderForm('add_question/index.html.twig', [
