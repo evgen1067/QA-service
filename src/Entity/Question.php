@@ -35,7 +35,7 @@ class Question
     private $question_date;
 
     #[ORM\Column(type: 'boolean')]
-    private $moderation_status;
+    private $moderation_status = false;
 
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Answer::class)]
     private $answers;

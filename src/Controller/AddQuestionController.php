@@ -30,9 +30,12 @@ class AddQuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
             # получаю текущего пользователя
             $user = $this->getUser();
+
             # получаю данные формы
             $question = $form->getData();
             $question

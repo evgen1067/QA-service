@@ -33,7 +33,7 @@ class Answer
     private $answer_correctness;
 
     #[ORM\Column(type: 'boolean')]
-    private $moderation_status;
+    private $moderation_status = false;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'answers')]
     private $user;

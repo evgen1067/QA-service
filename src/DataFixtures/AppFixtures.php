@@ -69,6 +69,26 @@ class AppFixtures extends Fixture
             $manager->persist($answer);
         }
 
+        for ($i = 51; $i < 101; $i++) {
+            // вопрос Карьера в IT
+            $question1 = new Question();
+            $question1->setUser($user)
+                ->setCategory($questionCategory1)
+                ->setTitle('Заголовок №' . $i)
+                ->setQuestionText('Текст вопроса №' . $i)
+                ->setQuestionDate(new \DateTime('now + ' . $i . ' hours'));
+            $manager->persist($question1);
+
+            // ответ Карьера в IT
+            $answer1 = new Answer();
+            $answer1->setUser($user)
+                ->setQuestion($question)
+                ->setAnswerText('Тестовый ответ на вопрос №' . $i)
+                ->setAnswerDate(new \DateTime('now + ' . $i . ' hours'))
+                ->setAnswerCorrectness(0);
+            $manager->persist($answer1);
+        }
+
         $manager->flush();
     }
 }
