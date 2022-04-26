@@ -23,6 +23,7 @@ class Answer
     #[ORM\JoinColumn(nullable: false)]
     private $question;
 
+    #[Assert\NotBlank(message: 'Вы не ввели текст вопроса')]
     #[ORM\Column(type: 'string', length: 510)]
     private $answer_text;
 

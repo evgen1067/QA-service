@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     itemOperations: ['get'],
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Аккаунт с таким email уже существует')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -25,13 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @var
-     * @Assert\NotBlank
-     * @Assert\Email(
-     *     message = "Email '{{ value }}' не корректен."
-     * )
-     */
+    #[Assert\NotBlank(message: 'Вы не ввели email')]
+    #[Assert\Email(message: 'Email не корректен.')]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
@@ -41,10 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    /**
-     * @var
-     * @Assert\NotBlank
-     */
+    #[Assert\NotBlank(message: 'Вы не ввели имя')]
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
