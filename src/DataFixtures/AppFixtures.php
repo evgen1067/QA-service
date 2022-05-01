@@ -6,6 +6,7 @@ use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\QuestionCategory;
 use App\Entity\User;
+use Symfony\Component\Uid\Uuid;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,6 +32,7 @@ class AppFixtures extends Fixture
         $user->setName('Егор Сергеев')
             ->setEmail('sergeev.egor48@mail.ru')
             ->setPassword($password)
+            ->setApiToken(Uuid::v1()->toRfc4122())
             ->setRoles($roles);
         $manager->persist($user);
 
@@ -39,6 +41,7 @@ class AppFixtures extends Fixture
         $user->setName('Евгений Богомолов')
             ->setEmail('bogomolov.evgen1067@mail.ru')
             ->setPassword($password)
+            ->setApiToken(Uuid::v1()->toRfc4122())
             ->setRoles($roles);
         $manager->persist($user);
 

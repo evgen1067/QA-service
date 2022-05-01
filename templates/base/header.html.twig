@@ -13,9 +13,13 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             </ul>
-            <a href="/api"
-               class="btn btn-bd-download d-lg-inline-block my-2 my-md-0 ms-md-3">API</a>
             {% if app.user %}
+                <a href="/api"
+                   class="btn btn-bd-download d-lg-inline-block my-2 my-md-0 ms-md-3">API</a>
+                <button id="copyApiToken"
+                        value="{{ app.user.apiToken }}"
+                        class="btn btn-bd-download d-lg-inline-block my-2 my-md-0 ms-md-3">Получить API-ключ
+                </button>
                 <a href="/profile"
                    class="btn btn-bd-download d-lg-inline-block my-2 my-md-0 ms-md-3">{{ app.user.getName() }}</a>
                 <a href="/add/question" class="btn btn-bd-download d-lg-inline-block my-2 my-md-0 ms-md-3">Оставить
