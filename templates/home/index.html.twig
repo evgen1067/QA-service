@@ -32,12 +32,12 @@
                                 <!-- TODO href -->
                                 <a href="/add/question" class="btn btn-lg btn-bd-primary mb-3 me-md-3">Оставить вопрос</a>
                                 <!-- TODO href -->
-                                <a href="/logout" class="btn btn-lg btn-outline-secondary mb-3">Выход</a>
+                                <a href="/logout" class="btn btn-lg btn-bd-secondary mb-3">Выход</a>
                             {% else %}
                                 <!-- TODO href -->
                                 <a href="/login" class="btn btn-lg btn-bd-primary mb-3 me-md-3">Авторизация</a>
                                 <!-- TODO href -->
-                                <a href="/register" class="btn btn-lg btn-outline-secondary mb-3">Регистрация</a>
+                                <a href="/register" class="btn btn-lg btn-bd-secondary mb-3">Регистрация</a>
                             {% endif %}
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <p>
                             {{ question.text }}
                         </p>
-                        <a class="btn btn-lg btn-outline-primary mb-3" href="/question/{{ question.id }}">
+                        <a class="btn btn-lg btn-outline-bd-primary mb-3" href="/question/{{ question.id }}">
                             {{ 'Подробнее (Ответов: ' ~ question.answerCount ~ ')' }}
                         </a>
                     </div>
@@ -78,23 +78,23 @@
                     <ul class="pagination">
                         {% if hasPreviousPage == true %}
                             <li class="page-item">
-                                <a href="/?page={{ currentPage - 1 }}" class="btn btn-primary me-3">Назад</a>
+                                <a href="/?page={{ currentPage - 1 }}" class="btn btn-bd-pagination me-3">Назад</a>
                             </li>
                             <li class="page-item">
-                                <a href="/?page=1" class="btn btn-primary me-3">1</a>
+                                <a href="/?page=1" class="btn btn-bd-pagination me-3">1</a>
                             </li>
                         {% else %}
                             <li class="page-item">
-                                <a class="btn btn-primary me-3 disabled">Назад</a>
+                                <a class="btn btn-bd-pagination me-3 disabled">Назад</a>
                             </li>
                         {% endif %}
                         {% if hasNextPage == true %}
                             <li class="page-item">
-                                <a href="/?page={{ currentPage + 1 }}" class="btn btn-primary">Далее</a>
+                                <a href="/?page={{ currentPage + 1 }}" class="btn btn-bd-pagination">Далее</a>
                             </li>
                         {% else %}
                             <li class="page-item">
-                                <a class="btn btn-primary disabled">Далее</a>
+                                <a class="btn btn-bd-pagination disabled">Далее</a>
                             </li>
                         {% endif %}
                     </ul>
