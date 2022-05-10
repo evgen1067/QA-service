@@ -29,11 +29,12 @@ class QuestionCategoryCrudController extends AbstractCrudController
         ];
     }
 
-    public function persistEntity (EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if (!$entityInstance instanceof QuestionCategory) return;
+        if (!$entityInstance instanceof QuestionCategory) {
+            return;
+        }
 
         parent::persistEntity($entityManager, $entityInstance);
     }
-
 }

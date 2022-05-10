@@ -18,6 +18,7 @@ class AddQuestionController extends AbstractController
     #[Route('/add/question', name: 'app_add_question')]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         # создание формы
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -30,8 +31,6 @@ class AddQuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
             # получаю текущего пользователя
             $user = $this->getUser();
@@ -46,6 +45,10 @@ class AddQuestionController extends AbstractController
             # получаю категорию
             $category = $question->getCategory();
 
+            if (! $category->getCategoryName()) {
+                $category->setCategoryName('Без категории');
+            }
+
             # проверка, что такой категории еще нет
             $categoryCheck = $doctrine
                 ->getRepository(QuestionCategory::class)
@@ -54,8 +57,9 @@ class AddQuestionController extends AbstractController
             $em = $doctrine->getManager();
 
             # если такой нет, то добавляю, иначе устанавливаю уже имеющеюся
-            if (!$categoryCheck) {
+            if (! $categoryCheck) {
                 $em->persist($category);
+                $question->setCategory($category);
             } else {
                 $question->setCategory($categoryCheck);
             }

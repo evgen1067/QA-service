@@ -35,9 +35,11 @@ class AnswerCrudController extends AbstractCrudController
         ];
     }
 
-    public function persistEntity (EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if (!$entityInstance instanceof Answer) return;
+        if (!$entityInstance instanceof Answer) {
+            return;
+        }
 
         $entityInstance->setAnswerDate(new \DateTime('now'));
 
@@ -45,5 +47,4 @@ class AnswerCrudController extends AbstractCrudController
 
         parent::persistEntity($entityManager, $entityInstance);
     }
-
 }

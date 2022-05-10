@@ -21,6 +21,7 @@ class QuestionCategory
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\NotBlank(message: 'Вы не ввели/указали категорию вопроса')]
     #[ORM\Column(type: 'string', length: 255)]
     private $category_name;
 
@@ -79,7 +80,8 @@ class QuestionCategory
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->category_name;
     }
 }

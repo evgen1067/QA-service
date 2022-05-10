@@ -25,9 +25,11 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
+    #[Assert\NotBlank(message: 'Вы не ввели заголовок вопроса')]
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
+    #[Assert\NotBlank(message: 'Вы не ввели текст вопроса')]
     #[ORM\Column(type: 'string', length: 510)]
     private $question_text;
 
@@ -155,7 +157,8 @@ class Question
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->title;
     }
 }

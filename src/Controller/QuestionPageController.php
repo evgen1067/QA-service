@@ -15,9 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionPageController extends AbstractController
 {
     #[Route('/question/{id}', name: 'question')]
-    public function index (int $id, ManagerRegistry $doctrine, Request $request): Response
+    public function index(int $id, ManagerRegistry $doctrine, Request $request): Response
     {
-
         $question = $doctrine->getRepository(Question::class)->findOneBy(['id' => $id]);
 
         if ($question->getModerationStatus()) {
@@ -76,7 +75,7 @@ class QuestionPageController extends AbstractController
     }
 
     #[Route('/question_help/{id}/{qId}', name: 'answer')]
-    public function helpedQuestion (int $id, int $qId, ManagerRegistry $doctrine): Response
+    public function helpedQuestion(int $id, int $qId, ManagerRegistry $doctrine): Response
     {
         $answer = $doctrine
             ->getRepository(Answer::class)

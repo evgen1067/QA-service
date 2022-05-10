@@ -21,13 +21,12 @@ class DashboardController extends AbstractDashboardController
     /**
      * @param AdminUrlGenerator $adminUrlGenerator
      */
-    public function __construct (private AdminUrlGenerator $adminUrlGenerator)
+    public function __construct(private AdminUrlGenerator $adminUrlGenerator)
     {
-
     }
 
     #[Route('/admin', name: 'admin')]
-    public function index (): Response
+    public function index(): Response
     {
         $url = $this->adminUrlGenerator
             ->setController(QuestionCrudController::class)
@@ -36,18 +35,19 @@ class DashboardController extends AbstractDashboardController
         return $this->redirect($url);
     }
 
-    public function configureDashboard (): Dashboard
+    public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
             ->setTitle('QAservices.');
     }
 
-    public function configureMenuItems (): iterable
+    public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToUrl('Назад', 'fas fa-home', '/');
 
         yield MenuItem::subMenu('Пользователи', 'fas fa-bars')
-            ->setSubItems([
+            ->setSubItems(
+                [
                     MenuItem::linkToCrud(
                         'Пользователи',
                         'fas fa-eye',
@@ -57,7 +57,8 @@ class DashboardController extends AbstractDashboardController
             );
 
         yield MenuItem::subMenu('Вопросы', 'fas fa-bars')
-            ->setSubItems([
+            ->setSubItems(
+                [
                     MenuItem::linkToCrud(
                         'Новый вопрос',
                         'fas fa-plus',
@@ -72,7 +73,8 @@ class DashboardController extends AbstractDashboardController
             );
 
         yield MenuItem::subMenu('Ответы', 'fas fa-bars')
-            ->setSubItems([
+            ->setSubItems(
+                [
                     MenuItem::linkToCrud(
                         'Новый ответ',
                         'fas fa-plus',
@@ -87,7 +89,8 @@ class DashboardController extends AbstractDashboardController
             );
 
         yield MenuItem::subMenu('Категории', 'fas fa-bars')
-            ->setSubItems([
+            ->setSubItems(
+                [
                     MenuItem::linkToCrud(
                         'Новая категория',
                         'fas fa-plus',
