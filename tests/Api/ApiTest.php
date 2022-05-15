@@ -3,9 +3,11 @@
 namespace App\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class ApiTest extends ApiTestCase
@@ -16,6 +18,13 @@ class ApiTest extends ApiTestCase
         return $user->getApiToken();
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     */
     public function testUsers(): void
     {
         $client = static::createClient();
@@ -30,6 +39,13 @@ class ApiTest extends ApiTestCase
         $this->assertIsArray($resultArray);
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     */
     public function testQuestions(): void
     {
         $client = static::createClient();
@@ -44,6 +60,13 @@ class ApiTest extends ApiTestCase
         $this->assertIsArray($resultArray);
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     */
     public function testAnswers(): void
     {
         $client = static::createClient();
@@ -58,6 +81,13 @@ class ApiTest extends ApiTestCase
         $this->assertIsArray($resultArray);
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     */
     public function testCategories(): void
     {
         $client = static::createClient();
